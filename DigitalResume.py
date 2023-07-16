@@ -1,21 +1,18 @@
 # ---- Importing Required Packages ----
 
-import requests
+import json
 from PIL import Image
 import streamlit as st
 from pathlib import Path
 from streamlit_lottie import st_lottie
 
 
-def load_lottieurl(url):
-    r = requests.get(url)
-    if r.status_code != 200:
-        return None
-    return r.json()
+def load_lottiefile(filepath):
+    with open(filepath, 'r') as f:
+        return json.load(f)
 
 
-lottie_hello = load_lottieurl("https://lottie.host/227602c6-5837-426f-95cf-61e897aacdbc/uPgIjmEb2f.lottie")
-lottie_coding = load_lottieurl("https://lottie.host/227602c6-5837-426f-95cf-61e897aacdbc/uPgIjmEb2f.lottie")
+lottie_hello = load_lottiefile(r'hello.json')
 
 # ---- Path Settings ----
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
