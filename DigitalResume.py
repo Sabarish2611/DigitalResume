@@ -4,15 +4,7 @@ import json
 from PIL import Image
 import streamlit as st
 from pathlib import Path
-from streamlit_lottie import st_lottie
 
-
-def load_lottiefile(filepath):
-    with open(filepath, 'r') as f:
-        return json.load(f)
-
-
-lottie_hello = load_lottiefile(r'hello.json')
 
 # ---- Path Settings ----
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
@@ -48,13 +40,7 @@ with open(resume_file_path, 'rb') as file:
 col1, col2 = st.columns(2, gap='small')
 
 with col1:
-    st_lottie(
-        lottie_hello,
-        speed=1,
-        reverse=False,
-        loop=True,
-        quality='high',
-    )
+    st.image(profile_pic)
 
 with col2:
     st.title(name)
