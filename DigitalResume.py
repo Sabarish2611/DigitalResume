@@ -1,8 +1,21 @@
 # ---- Importing Required Packages ----
-from pathlib import Path
 
-import streamlit as st
+import requests
 from PIL import Image
+import streamlit as st
+from pathlib import Path
+from streamlit_lottie import st_lottie
+
+
+def load_lottieurl(url):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+
+lottie_hello = load_lottieurl("https://lottie.host/227602c6-5837-426f-95cf-61e897aacdbc/uPgIjmEb2f.lottie")
+lottie_coding = load_lottieurl("https://lottie.host/227602c6-5837-426f-95cf-61e897aacdbc/uPgIjmEb2f.lottie")
 
 # ---- Path Settings ----
 current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
@@ -17,15 +30,13 @@ name = 'Sabarishwaran G'
 description = 'Data Scientist, Trellix'
 email = 'sabarish261101@gmail.com'
 social_media = {
-    'LinkedIn' : 'https://www.linkedin.com/in/sabarish2611/',
-    'GitHub' : 'https://github.com/Sabarish2611',
-    'Kaggle' : 'https://www.kaggle.com/sabarish2611'
+    'LinkedIn': 'https://www.linkedin.com/in/sabarish2611/',
+    'GitHub': 'https://github.com/Sabarish2611',
+    'Kaggle': 'https://www.kaggle.com/sabarish2611'
 }
-
 
 st.set_page_config(page_title, page_icon)
 st.title('Hello There :wave:')
-
 
 # ---- Loading Assets ----
 with open(css_file_path) as css_file:
@@ -40,12 +51,19 @@ with open(resume_file_path, 'rb') as file:
 col1, col2 = st.columns(2, gap='small')
 
 with col1:
-    st.image(profile_pic)
+    st_lottie(
+        lottie_hello,
+        speed=1,
+        reverse=False,
+        loop=True,
+        quality='high',
+    )
 
 with col2:
     st.title(name)
     st.write(description)
-    st.download_button(label='Download Resume ⇩', data=pdf_byte, file_name=resume_file_path.name, mime='application/octet-stream')
+    st.download_button(label='Download Resume ⇩', data=pdf_byte, file_name=resume_file_path.name,
+                       mime='application/octet-stream')
     st.write(f'✉️ {email}')
 
 # ---- Social Links ----
